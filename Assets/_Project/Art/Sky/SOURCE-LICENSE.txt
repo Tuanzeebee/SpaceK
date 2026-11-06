@@ -1,0 +1,11 @@
+Kloofendal 48d Partly Cloudy (Pure Sky) - 2K HDRI
+Original photography: Greg Zaal. Sky edits: Jarod Guest. Published by Poly Haven.
+Source: https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky
+Downloaded: 2026-11-06
+File: https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr
+Original file size: 5451493 bytes
+Verified MD5: 2eba3a4d7eeb23cbfbeca364c97e7980 (matches publisher file API)
+License: CC0 1.0 Universal, https://creativecommons.org/publicdomain/zero/1.0/
+Publisher license statement: https://polyhaven.com/license
+Commercial use, redistribution and modification are allowed. Attribution is appreciated, not required.
+No Blender, Tripo, binary plugin or Asset Store package was installed for this sky.

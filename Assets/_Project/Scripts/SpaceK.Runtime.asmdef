@@ -1,0 +1,5 @@
+{
+  "name": "SpaceK.Runtime",
+  "rootNamespace": "SpaceK",
+  "references": ["Unity.InputSystem", "Unity.Cinemachine", "Unity.ugui", "Unity.TextMeshPro"]
+}

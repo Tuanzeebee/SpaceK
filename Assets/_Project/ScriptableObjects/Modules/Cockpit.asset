@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6594ca9d834395846a012e3d98521d6b, type: 3}
+  m_Name: Cockpit
+  m_EditorClassIdentifier: SpaceK.Runtime::SpaceK.Building.BuildModuleDefinition
+  DisplayName: Cockpit
+  Prefab: {fileID: 7087164213846812367, guid: 622f2e7a61ad3a1499e43f03f6c9e374, type: 3}
+  Cost:
+    Item: {fileID: 11400000, guid: 057af05c9b71b2c4cb9872448f6b8f8e, type: 2}
+    Amount: 1
+  Size: {x: 2, y: 2, z: 2}
+  SocketStep: {x: 2, y: 2, z: 2}

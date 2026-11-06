@@ -1,0 +1,5 @@
+{
+  "name": "SpaceK.PlayModeTests",
+  "references": ["SpaceK.Runtime", "Unity.InputSystem", "Unity.Cinemachine", "Unity.ugui", "Unity.TextMeshPro"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}

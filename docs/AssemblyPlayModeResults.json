@@ -1,0 +1,125 @@
+{
+  "status": "completed",
+  "duration": 10.64,
+  "summary": {
+    "total": 16,
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0
+  },
+  "results": [
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.AimedRemovalKeepsModuleWhenRefundCannotFit",
+      "Status": "Passed",
+      "Duration": 1.3991369,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.BuildingGhostUsesOnlyHighestDetailLod",
+      "Status": "Passed",
+      "Duration": 0.5312206,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.BuildingSnapsPlacesConsumesOnceAndRejectsOverlap",
+      "Status": "Passed",
+      "Duration": 0.5187886,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.CameraRaycastFindsPickupAndNearerWallBlocksIt",
+      "Status": "Passed",
+      "Duration": 0.499706,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.FinAttachesToHullSideAndFacesOutward",
+      "Status": "Passed",
+      "Duration": 0.5529402,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.FullCargoDoesNotDestroyPickupAndTerminalOpensPanel",
+      "Status": "Passed",
+      "Duration": 0.5100549,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.HighModuleCanBeExtendedByAimingAtItsSide",
+      "Status": "Passed",
+      "Duration": 0.4819899,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.ImportedModulesCanBeSelectedPreviewedAndPlaced",
+      "Status": "Passed",
+      "Duration": 0.545732,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.InventoryModalSuppressesWorldActionsAndEscapeClosesIt",
+      "Status": "Passed",
+      "Duration": 0.584289,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.JumpAndCrouchRespectGroundAndOverheadClearance",
+      "Status": "Passed",
+      "Duration": 0.7907771,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.PickupDoorAndWorkbenchWorkThroughInteraction",
+      "Status": "Passed",
+      "Duration": 0.5438683,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.ThirdPersonCameraCollisionKeepsCameraInFrontOfWall",
+      "Status": "Passed",
+      "Duration": 0.644008,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.ThirdPersonInteractionUsesPlayerReachRatherThanCameraDistance",
+      "Status": "Passed",
+      "Duration": 0.6107007,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.UndoPlacementRefundsExactlyOnceThroughKeyboard",
+      "Status": "Passed",
+      "Duration": 0.5143373,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.WasdAndVPreserveOnePlayerAndContinueMovement",
+      "Status": "Passed",
+      "Duration": 0.6365639,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "SpaceK.Tests.SimulatorPlayModeTests.WorkbenchRecipeButtonProducesItemAfterItsDuration",
+      "Status": "Passed",
+      "Duration": 1.2392987,
+      "Message": null,
+      "StackTrace": null
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "SpaceK.EditModeTests",
+  "references": ["SpaceK.Runtime", "SpaceK.Editor", "Unity.InputSystem", "Unity.Cinemachine", "Unity.ugui", "Unity.TextMeshPro"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}
