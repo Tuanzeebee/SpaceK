@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6594ca9d834395846a012e3d98521d6b, type: 3}
+  m_Name: Hull
+  m_EditorClassIdentifier: SpaceK.Runtime::SpaceK.Building.BuildModuleDefinition
+  DisplayName: Hull Module
+  Prefab: {fileID: 7566082846391510645, guid: 3936fac7021aa1641a423de01e20bdeb, type: 3}
+  Cost:
+    Item: {fileID: 11400000, guid: 55c651528f56a0740a760c9fb3f4150f, type: 2}
+    Amount: 1
+  Size: {x: 1.2, y: 2, z: 1.2}
+  SocketStep: {x: 1.2, y: 2, z: 1.2}
+  Mount: 0
+  AcceptsSideAttachments: 1
+  SupportsStacking: 1
+  AttachmentInset: 0.005
