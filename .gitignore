@@ -116,3 +116,6 @@ InitTestScene*.unity*
 # Unity crash recovery scenes (keep locally, not in the project source)
 /Assets/_Recovery/
 /Assets/_Recovery.meta
+
+# Local editor settings
+.vscode/

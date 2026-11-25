@@ -57,10 +57,10 @@ namespace SpaceK.Tests
         }
         [UnityTest] public IEnumerator WasdAndVPreserveOnePlayerAndContinueMovement()
         {
-            int identity = motor.GetInstanceID(); var start = motor.transform.position; Keys(Key.W); yield return new WaitForSeconds(.35f);
+            var identity = motor.GetEntityId(); var start = motor.transform.position; Keys(Key.W); yield return new WaitForSeconds(.35f);
             Assert.That(motor.transform.position.z - start.z, Is.GreaterThan(.6f));
             Keys(Key.W, Key.V); yield return null; yield return null;
-            Assert.That(motor.CameraRig.ThirdPerson, Is.True); Assert.That(motor.GetInstanceID(), Is.EqualTo(identity));
+            Assert.That(motor.CameraRig.ThirdPerson, Is.True); Assert.That(motor.GetEntityId(), Is.EqualTo(identity));
             var duringSwitch = motor.transform.position; Keys(Key.W); yield return new WaitForSeconds(.15f); Keys(); yield return null;
             Assert.That(motor.transform.position.z, Is.GreaterThan(duringSwitch.z));
             Assert.That(Object.FindObjectsByType<PlayerMotor>(FindObjectsSortMode.None).Length, Is.EqualTo(1));
