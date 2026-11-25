@@ -24,6 +24,11 @@ namespace SpaceK.Building
         public string Feedback { get; private set; } = "Aim at the assembly bay";
         public int SelectedIndex { get; private set; }
         public BuildModuleDefinition Selected => Modules != null && Modules.Length > 0 ? Modules[SelectedIndex % Modules.Length] : null;
+        public event System.Action<BuildModuleDefinition> SelectionChanged;
+        public event System.Action<bool> ModeChanged;
+        public event System.Action Rotated;
+        public event System.Action<PlacedShipModule> ModulePlaced;
+        public event System.Action ModuleRemoved;
         GameObject ghost;
         Renderer[] ghostRenderers;
         int quarterTurns;
@@ -39,8 +44,8 @@ namespace SpaceK.Building
             if (!IsPlacing) return;
             if (Input.Pressed("Cancel")) { Cancel(); return; }
             if (Input.Pressed("NextModule")) Select((SelectedIndex + 1) % Modules.Length);
-            if (Input.Pressed("Rotate")) quarterTurns++;
-            if (Input.Pressed("NextMountSide") && Selected.Mount == ModuleMount.Radial) mountSideTurns++;
+            if (Input.Pressed("Rotate")) RotateSelection();
+            if (Input.Pressed("NextMountSide")) CycleMountSide();
             if (!Input.WorldEnabled) { ghost.SetActive(false); return; }
             if (Input.Pressed("UndoBuild")) { UndoLastPlacement(); return; }
             if (Input.Pressed("RemoveModule")) { TryRemoveAimed(); return; }
@@ -51,6 +56,7 @@ namespace SpaceK.Building
         {
             if (Selected == null || !Selected.IsValid) { HUD.Notify("No build module configured"); return; }
             IsPlacing = true; quarterTurns = 0; mountSideTurns = 0; CreateGhost();
+            SelectionChanged?.Invoke(Selected); ModeChanged?.Invoke(true);
         }
         public void Select(int index)
         {
@@ -59,6 +65,17 @@ namespace SpaceK.Building
             quarterTurns = 0;
             mountSideTurns = 0;
             if (IsPlacing) CreateGhost();
+            SelectionChanged?.Invoke(Selected);
+        }
+        public bool RotateSelection()
+        {
+            if (!IsPlacing || !Input.WorldEnabled) return false;
+            quarterTurns++; Rotated?.Invoke(); return true;
+        }
+        public bool CycleMountSide()
+        {
+            if (!IsPlacing || !Input.WorldEnabled || Selected.Mount != ModuleMount.Radial) return false;
+            mountSideTurns++; Rotated?.Invoke(); return true;
         }
         void CreateGhost()
         {
@@ -147,7 +164,7 @@ namespace SpaceK.Building
             module.Support = support;
             module.PaidCost = Selected.Cost;
             history.Add(module);
-            Physics.SyncTransforms(); HUD.Notify(Selected.DisplayName + " installed"); return true;
+            Physics.SyncTransforms(); HUD.Notify(Selected.DisplayName + " installed"); ModulePlaced?.Invoke(module); return true;
         }
         bool Aim(out RaycastHit hit)
         {
@@ -182,12 +199,15 @@ namespace SpaceK.Building
             module.gameObject.SetActive(false);
             Destroy(module.gameObject);
             Physics.SyncTransforms(); HUD.Notify("Module removed - item returned to cargo");
+            ModuleRemoved?.Invoke();
             return true;
         }
         public void Cancel()
         {
+            bool wasPlacing = IsPlacing;
             IsPlacing = false; PlacementValid = false;
             if (ghost != null) Destroy(ghost);
+            if (wasPlacing) ModeChanged?.Invoke(false);
         }
         void OnDisable() { Cancel(); }
     }

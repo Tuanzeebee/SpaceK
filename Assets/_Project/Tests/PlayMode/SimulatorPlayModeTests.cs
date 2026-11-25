@@ -65,6 +65,51 @@ namespace SpaceK.Tests
             Assert.That(motor.transform.position.z, Is.GreaterThan(duringSwitch.z));
             Assert.That(Object.FindObjectsByType<PlayerMotor>(FindObjectsSortMode.None).Length, Is.EqualTo(1));
         }
+        [UnityTest] public IEnumerator WorkshopHandsAnimateSuccessfulBuildAndRespectCameraAndMenus()
+        {
+            var presentation = System.Array.Find(motor.GetComponentsInChildren<MonoBehaviour>(true), p => p.GetType().Name == "WorkshopHandsPresenter");
+            Assert.That(presentation, Is.Not.Null, "Engineer needs the rigged workshop hands presentation.");
+            var type = presentation.GetType();
+            var camera = (UnityEngine.Camera)type.GetField("HandsCamera").GetValue(presentation);
+            var animator = (Animator)type.GetField("Animator").GetValue(presentation);
+            var skin = presentation.GetComponentInChildren<SkinnedMeshRenderer>(true);
+            Assert.That(skin.bones.Length, Is.GreaterThan(30)); Assert.That(animator.runtimeAnimatorController, Is.Not.Null);
+            Assert.That(camera.enabled, Is.True);
+            motor.CameraRig.ToggleMode(); yield return null; Assert.That(camera.enabled, Is.False);
+            motor.CameraRig.ToggleMode(); yield return null; Assert.That(camera.enabled, Is.True);
+            Teleport(new(5, .1f, -3)); yield return Aim(new(5, .05f, 1));
+            hud.Building.Begin(); yield return null;
+            var wrist = System.Array.Find(skin.bones, b => b.name == "wrist.r"); Vector3 restingWrist = wrist.position;
+            Assert.That(hud.Building.TryPlace(), Is.True); yield return new WaitForSeconds(.2f);
+            Assert.That(type.GetProperty("LastAction").GetValue(presentation).ToString(), Is.EqualTo("Install"));
+            Assert.That(Vector3.Distance(wrist.position, restingWrist), Is.GreaterThan(.005f), "The rig must actually animate, not just set a state name.");
+            int installed = (int)type.GetProperty("ActionRevision").GetValue(presentation);
+            // Modal UI must neither render the viewmodel nor execute placement/rotation presentation.
+            hud.OpenInventory(); yield return null; Assert.That(camera.enabled, Is.False);
+            Keys(Key.R); yield return null; yield return null;
+            Assert.That((int)type.GetProperty("ActionRevision").GetValue(presentation), Is.EqualTo(installed));
+            Keys(); hud.ClosePanels(); yield return null; Assert.That(camera.enabled, Is.True);
+            hud.Building.Begin(); Keys(Key.R); yield return null; yield return null;
+            Assert.That(type.GetProperty("LastAction").GetValue(presentation).ToString(), Is.EqualTo("Rotate"));
+            Assert.That((int)type.GetProperty("ActionRevision").GetValue(presentation), Is.GreaterThan(installed));
+        }
+        [UnityTest] public IEnumerator WorkshopEntranceIsTraversableAndDoorControlClosesItsPanel()
+        {
+            var door = Object.FindFirstObjectByType<WorkshopHangarDoor>(); Assert.That(door, Is.Not.Null);
+            Assert.That(door.IsOpen, Is.True);
+            Teleport(new(-14, .1f, -4)); motor.CameraRig.enabled = false;
+            typeof(SpaceK.CameraSystem.PlayerCameraRig).GetProperty("Yaw").SetValue(motor.CameraRig, 270f);
+            Keys(Key.W); yield return new WaitForSeconds(.9f); Keys(); yield return null;
+            Assert.That(motor.transform.position.x, Is.LessThan(-16.5f), "The imported port wall must not leave an invisible collider across the doorway.");
+            Assert.That(motor.transform.position.y, Is.GreaterThan(-.1f), "The exterior apron must support the player.");
+            Teleport(door.transform.position + new Vector3(2, -1.2f, 0)); yield return Aim(door.GetComponent<BoxCollider>().bounds.center);
+            Assert.That(motor.GetComponent<PlayerInteractor>().Current, Is.SameAs(door));
+            Keys(Key.E); yield return null; Keys(); yield return new WaitForSeconds(3.2f);
+            Assert.That(door.IsOpen, Is.False);
+            Assert.That(Vector3.Distance(door.Panel.localPosition, door.ClosedLocalPosition), Is.LessThan(.03f));
+            Assert.That(Physics.Raycast(new Vector3(-14, 1, -4), Vector3.left, out var hit, 4), Is.True);
+            Assert.That(hit.collider.transform, Is.EqualTo(door.Panel));
+        }
         [UnityTest] public IEnumerator JumpAndCrouchRespectGroundAndOverheadClearance()
         {
             Assert.That(motor.IsGrounded, Is.True); float y = motor.transform.position.y;
@@ -114,6 +159,15 @@ namespace SpaceK.Tests
             var pickup = Object.FindFirstObjectByType<PickupInteractable>(); var full = new InventoryModel(1); full.TryAdd(pickup.Content.Item, pickup.Content.Item.MaxStack);
             pickup.Interact(new InteractionContext(motor.transform, full, hud)); yield return null;
             Assert.That(pickup != null && pickup.gameObject.activeSelf, Is.True);
+            var interaction = motor.GetComponent<PlayerInteractor>();
+            var hands = motor.GetComponentInChildren<WorkshopHandsPresenter>(); int revision = hands.ActionRevision;
+            var fullCargo = new GameObject("Full pickup cargo").AddComponent<InventoryComponent>();
+            while (fullCargo.Model.TryAdd(pickup.Content.Item, pickup.Content.Item.MaxStack)) { }
+            interaction.Inventory = fullCargo;
+            Teleport(pickup.transform.position + new Vector3(0, -.4f, -2)); yield return Aim(pickup.transform.position);
+            Keys(Key.E); yield return null; yield return null; Keys(); yield return null;
+            Assert.That(hands.ActionRevision, Is.EqualTo(revision), "Failed pickup must not play a successful collection animation.");
+            interaction.Inventory = hud.Inventory; Object.Destroy(fullCargo.gameObject);
             var terminal = Object.FindFirstObjectByType<TerminalInteractable>();
             Teleport(terminal.transform.position + new Vector3(0, .1f, -2)); yield return Aim(terminal.GetComponentInChildren<Collider>().bounds.center);
             Assert.That(motor.GetComponent<PlayerInteractor>().Current, Is.SameAs(terminal));

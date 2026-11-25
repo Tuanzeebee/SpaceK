@@ -14,6 +14,7 @@ namespace SpaceK.Interaction
         [Min(.5f)] public float Range = 3.2f;
         public LayerMask Mask = ~4;
         public IInteractable Current { get; private set; }
+        public event System.Action<IInteractable> Interacted;
         void Update()
         {
             Current = null;
@@ -25,7 +26,11 @@ namespace SpaceK.Interaction
                 var context = new InteractionContext(transform, Inventory.Model, HUD);
                 foreach (var component in hit.collider.GetComponentsInParent<MonoBehaviour>())
                     if (component is IInteractable interactable && interactable.CanInteract(context)) { Current = interactable; break; }
-                if (Current != null && Input.Pressed("Interact")) Current.Interact(context);
+                if (Current != null && Input.Pressed("Interact"))
+                {
+                    Current.Interact(context);
+                    if (Current is not PickupInteractable pickup || pickup.Collected) Interacted?.Invoke(Current);
+                }
             }
             HUD.SetPrompt(Current == null ? "" : "[E]  " + Current.Prompt);
         }

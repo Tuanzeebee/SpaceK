@@ -1,0 +1,15 @@
+WRAD ARMS — original rig/mesh by wriks (wwwriks).
+Official source: https://github.com/wwwriks/wrad-arms
+Source page: https://wriks.itch.io/wrad-arms
+Pinned revision: f3987244176c33d2c20d4f9e139980af12684d87
+Downloaded: 2026-11-06
+Original arms.fbx SHA256: 1808ff18194d7262a7060c517db1e813e12102b614503bf62a5d8e51a3a152bf
+License: CC0 1.0 Universal, complete publisher license in LICENSE.txt.
+No attribution required. Source credited here for provenance.
+
+SpaceK modifications: native skinned mesh with glove/fabric material regions,
+reinforcement/cuff geometry, Generic hand/finger poses and editable Unity clips,
+electric driver model and gameplay presentation. No upstream scripts or executable
+were downloaded or run. Blender is not required at runtime or for this import.
+
+This is a low-poly rig source, not a photorealistic scanned hand model.

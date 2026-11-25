@@ -7,6 +7,7 @@ namespace SpaceK.Interaction
     {
         public ItemAmount Content;
         bool collected;
+        public bool Collected => collected;
         public string Prompt => Content.Item == null ? "Unconfigured pickup" : "Collect " + Content.Item.DisplayName + " x" + Content.Amount;
         public bool CanInteract(InteractionContext context) => !collected && Content.Item != null;
         public void Interact(InteractionContext context)
